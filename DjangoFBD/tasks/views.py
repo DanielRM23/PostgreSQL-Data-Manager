@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseBadRequest
 from .models import Hotel
 
@@ -49,7 +49,7 @@ def createHotel(request):
         )
 
         # Guardar el objeto en la base de datos
-        nuevo_hotel.save()  # Esto es crítico para guardar en la base de datos
+        nuevo_hotel.save()
 
         # Redirigir después de guardar con éxito
         return redirect('/')
@@ -63,3 +63,34 @@ def deleteHotel(request, hotel_id):
     hotel_deleted = Hotel.objects.get(idHotel=hotel_id)
     hotel_deleted.delete()
     return redirect('/')
+
+def editHotelRender(request, hotel_id):
+    hotel_edited = Hotel.objects.get(idHotel=hotel_id)
+    return render(request, "edicionHotel.html", {"hotel_edited": hotel_edited})
+
+
+def editHotel(request, hotel_id):
+    hotel = get_object_or_404(Hotel, idHotel=hotel_id)
+
+    if request.method == 'POST':
+        # Actualizar el objeto existente
+        hotel.nombreEstablecimiento = request.POST.get("nombreEstablecimiento")
+        hotel.horaCheckIn = request.POST.get("horaCheckIn")
+        hotel.horaCheckOut = request.POST.get("horaCheckOut")
+        hotel.petFriendly = request.POST.get("petFriendly") == 'on'
+        hotel.servicio = request.POST.get("servicio")
+        hotel.numeroInterior = request.POST.get("numeroInterior")
+        hotel.numeroExterior = int(request.POST.get("numeroExterior"))
+        hotel.colonia = request.POST.get("colonia")
+        hotel.calle = request.POST.get("calle")
+        hotel.estado = request.POST.get("estado")
+
+        # Guardar cambios
+        hotel.save()
+
+        # Redirigir después de la edición
+        return redirect('/')
+    else:
+        return HttpResponseBadRequest("Solo se aceptan solicitudes POST.")
+
+

@@ -61,6 +61,12 @@
                             {% csrf_token %}
                             <button type="submit" class="btn btn-danger">Eliminar</button>  <!-- El botón de eliminar debe estar dentro del formulario -->
                         </form>
+
+                        <!-- Formulario para editar -->
+                        <form action="{% url 'editHotelRender' hotel.idHotel %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit">Editar</button>  <!-- El botón de editar debe estar dentro del formulario -->
+                        </form>
                     </div>
                 {% empty %}
                     <h1 class="mt-4 card card-body display-5 text-center"> Sin registros </h1>
