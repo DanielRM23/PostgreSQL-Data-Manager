@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseBadRequest
 from .models import Hotel
-
+from django.http import JsonResponse  # Para devolver respuestas JSON
 
 def list_tasks(request):
     '''
@@ -215,3 +215,27 @@ def readHotel(request, hotel_id):
     else:
         # Devuelve un error si la solicitud no es de tipo POST
         return HttpResponseBadRequest("Solo se aceptan solicitudes POST.")  # Solo acepta solicitudes POST
+
+
+###################################
+
+def obtener_detalles_hotel(request, hotel_id):
+    # Obtiene el hotel por su ID, o devuelve 404 si no se encuentra
+    hotel = get_object_or_404(Hotel, idhotel=hotel_id)
+
+    # Estructura los datos para ser devueltos como JSON
+    hotel_data = {
+        'id': hotel.idhotel,
+        'nombre_establecimiento': hotel.nombreestablecimiento,
+        'hora_checkin': hotel.horacheckin,
+        'hora_checkout': hotel.horacheckout,
+        'pet_friendly': hotel.petfriendly,
+        'servicios': hotel.servicio,
+        'numero_interior': hotel.numerointerior,
+        'numero_exterior': hotel.numeroexterior,
+        'colonia': hotel.colonia,
+        'calle': hotel.calle,
+        'estado': hotel.estado,
+    }
+
+    return JsonResponse(hotel_data)  # Devuelve datos como JSON

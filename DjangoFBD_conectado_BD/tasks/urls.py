@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import (list_tasks, createHotel, deleteHotel,
-                    editHotelRender, editHotel, readHotelRender, readHotel)
+                    editHotelRender, editHotel, readHotelRender, readHotel,
+                    obtener_detalles_hotel)
 
 # Lista de rutas para la aplicación de gestión de hoteles
 urlpatterns = [
@@ -25,4 +26,7 @@ urlpatterns = [
     # Ruta para editar los detalles de un hotel específico (similar a `editHotel`, pero
     # podría ser usada para ver o editar detalles dependiendo del contexto)
     path('read_hotel/<str:hotel_id>/', readHotel, name="readHotel"),
+
+    path('read_hotel/<int:hotel_id>/', obtener_detalles_hotel, name='obtener_detalles_hotel'),  # Ruta para la vista JSON
+
 ]
