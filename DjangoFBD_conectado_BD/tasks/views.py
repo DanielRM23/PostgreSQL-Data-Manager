@@ -217,9 +217,23 @@ def readHotel(request, hotel_id):
         return HttpResponseBadRequest("Solo se aceptan solicitudes POST.")  # Solo acepta solicitudes POST
 
 
-###################################
 
 def obtener_detalles_hotel(request, hotel_id):
+    """
+    Vista para obtener detalles de un hotel específico por su ID.
+
+    Argumentos:
+        request (HttpRequest): La solicitud HTTP que se está procesando.
+        hotel_id (str): El ID del hotel para buscar en la base de datos.
+
+    Retorno:
+        JsonResponse: Datos del hotel en formato JSON. Contiene detalles del hotel
+        como el ID, nombre, hora de check-in y check-out, si es pet-friendly,
+        y ubicación.
+
+    Excepciones:
+        Http404: Se lanza si el hotel con el ID especificado no se encuentra.
+    """
     # Obtiene el hotel por su ID, o devuelve 404 si no se encuentra
     hotel = get_object_or_404(Hotel, idhotel=hotel_id)
 
@@ -239,3 +253,4 @@ def obtener_detalles_hotel(request, hotel_id):
     }
 
     return JsonResponse(hotel_data)  # Devuelve datos como JSON
+

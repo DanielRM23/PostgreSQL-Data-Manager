@@ -27,6 +27,7 @@ urlpatterns = [
     # podría ser usada para ver o editar detalles dependiendo del contexto)
     path('read_hotel/<str:hotel_id>/', readHotel, name="readHotel"),
 
-    path('read_hotel/<int:hotel_id>/', obtener_detalles_hotel, name='obtener_detalles_hotel'),  # Ruta para la vista JSON
+    # Ruta para la vista JSON
+    path('read_hotel/<int:hotel_id>/', obtener_detalles_hotel, name='obtener_detalles_hotel'),  
 
 ]
